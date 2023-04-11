@@ -16,6 +16,8 @@ export interface IUser {
   code: string;
   name: string;
   myusertype:string;
+  phoneNum:string;
+  "custom:phoneNumber":string;
 }
 
 @Injectable({
@@ -58,14 +60,15 @@ export class CognitoService {
         // this is a custom attribute you setup on creating the user pool
         // if it contains the word admin - then this admin user has access
         // to profile, create entry and update/delete
-
         let usertype = user.attributes["custom:usertype"];
-         if (usertype=="admin")
-          this.userService.UserType="admin";
-         else
-          this.userService.UserType="user";
+        console.log(usertype);
+        console.log(user.attributes["custom:phoneNumber"]);
+        this.userService.UserPhoneNumber=user.attributes["custom:phoneNumber"];
+        if (usertype=="admin")
+        this.userService.UserType="admin";
+        else
+        this.userService.UserType="user";
       });
-
     });
   }
 
@@ -73,15 +76,14 @@ export class CognitoService {
     return Auth.signOut()
     .then(() => {
       this.authenticationSubject.next(false);
+      this.userService.UserType="";
+      this.userService.UserPhoneNumber="";
     });
   }
 
   public isAuthenticated(): boolean {
     return this.authenticationSubject.value;
   }
-
-
-
 
 
   public getUser(): Promise<any> {

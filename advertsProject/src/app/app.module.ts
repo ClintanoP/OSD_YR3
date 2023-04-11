@@ -10,6 +10,9 @@ import { SignInComponent } from './users/components/sign-in/sign-in.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './users/components/profile/profile.component';
 import { ErrorPopupComponent } from './users/components/error-popup/error-popup.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminDashboardComponent } from './users/components/admin-dashboard/admin-dashboard.component';
+
 
 @NgModule({
   declarations: [
@@ -20,11 +23,13 @@ import { ErrorPopupComponent } from './users/components/error-popup/error-popup.
     SignInComponent,
     ProfileComponent,
     ErrorPopupComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

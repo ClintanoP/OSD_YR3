@@ -1,7 +1,12 @@
+import { Seller } from "../seller/seller.model";
+
 export interface Listing{
-    id: string;
+    _id: string;
     title: string;
-    imgURL:string;
     description:string;
-    price:string;
+    price:number;
+    image_url:string;
+    showPhone?: boolean;
+    seller: {name: string, email: string, phone: string};
+    
   }

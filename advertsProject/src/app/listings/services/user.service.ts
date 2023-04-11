@@ -7,6 +7,7 @@ import { IUser } from './cognito.service';
 
 export class UserService {
     public UserType?:string;
+    public UserPhoneNumber?:string;
     constructor() { }
 
     user?:IUser;

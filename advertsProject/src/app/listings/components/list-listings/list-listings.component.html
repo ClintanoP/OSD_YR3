@@ -1,59 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listings Home Page</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <!-- Listing card -->
-      <div class="col-md-4">
-        <div class="listing-card">
-          <img src="https://via.placeholder.com/350x200.png?text=Listing+Image" alt="Listing Image">
-          <div class="card-body">
-            <h5 class="card-title">Listing Title</h5>
-            <p class="card-text">Listing Description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et odio aliquam, congue elit quis, ullamcorper urna.</p>
-            <div class="card-price">$1000</div>
+<div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listings Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+  </head>
+  <body class="gradient-bg">
+    <section class="wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col text-center mb-5">
+            <h1 class="display-4">Explore Our Listings</h1>
+            <p class="lead">We have loads of variety, if you want to buy or sell, we have options for all.</p>
           </div>
         </div>
-      </div>
-      <!-- Listing card -->
-      <div class="col-md-4">
-        <div class="listing-card">
-          <img src="https://via.placeholder.com/350x200.png?text=Listing+Image" alt="Listing Image">
-          <div class="card-body">
-            <h5 class="card-title">Listing Title</h5>
-            <p class="card-text">Listing Description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et odio aliquam, congue elit quis, ullamcorper urna.</p>
-            <div class="card-price">$2000</div>
-          </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-4" *ngFor="let list of (listings$ | async)">
+            <div class="card text-white card-has-bg click-col" style="background-image:url('{{list.image_url}}');"
+                (mouseover)="showPhoneNumber(list)" (mouseout)="hidePhoneNumber()">
+              <img class="card-img d-none" src="{{list.image_url}}" alt="{{ list.title }}">
+              <div class="card-img-overlay d-flex flex-column">
+                <div class="card-body">
+                  <h4 class="card-title mt-0 "><a class="text-white">{{list.title}}</a></h4>
+                  <h5 class="card-title mt-0 "><a class="text-white">{{list.description}}</a></h5>
+                  <small><i class="far fa-clock"></i>Price : ${{list.price}}</small>
+                  <p class="phone-number mt-2 d-none"></p>
+                </div>
+                <div class="card-footer">
+                  <div class="media">
+                    <div class="media-body">
+                      <h6 class="my-0 text-white d-block">{{list.seller.name}}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
         </div>
       </div>
-
-<!-- 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>Explore Our Listings</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card-columns">
-        <div class="card" *ngFor="let listing of listings">
-          <img class="card-img-top" [src]="listing.imgURL" alt="{{listing.title}}">
-          <div class="card-body">
-            <h5 class="card-title">{{listing.title}}</h5>
-            <p class="card-text">{{listing.description}}</p>
-            <p class="card-text font-weight-bold">Price: {{listing.price}}</p>
-            <a href="#" class="btn btn-primary">View Details</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
+  </body>
 </div>
---> 
-                

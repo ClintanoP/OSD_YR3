@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<div class="gradient-bg">
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
-      <a class="nav-link" routerLink="/home" routerLinkActive="active">Address Book</a>
+      <a class="nav-link" routerLink="/home" routerLinkActive="active">Listings Website</a>
        
   
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +25,9 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/createListing" routerLinkActive="active" *ngIf="isAuthenticated()">Create Listing</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/adminDashboard" routerLinkActive="active" *ngIf="isAdmin()">Admin Dashboard</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -34,4 +38,6 @@
 
 <div style="margin-top: 20px;">
     <router-outlet></router-outlet>
+</div>
+
 </div>
