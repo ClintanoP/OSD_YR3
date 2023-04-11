@@ -1,11 +1,5 @@
 <div>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listings Home Page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-  </head>
-  <body class="gradient-bg">
+  <body>
     <section class="wrapper">
       <div class="container">
         <div class="row">
@@ -17,14 +11,14 @@
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4 mb-4" *ngFor="let list of (listings$ | async)">
             <div class="card text-white card-has-bg click-col" style="background-image:url('{{list.image_url}}');"
-                (mouseover)="showPhoneNumber(list)" (mouseout)="hidePhoneNumber()">
+                (mouseover)="showPhoneNumber(list)" (mouseout)="hidePhoneNumber(list)">
               <img class="card-img d-none" src="{{list.image_url}}" alt="{{ list.title }}">
               <div class="card-img-overlay d-flex flex-column">
                 <div class="card-body">
                   <h4 class="card-title mt-0 "><a class="text-white">{{list.title}}</a></h4>
                   <h5 class="card-title mt-0 "><a class="text-white">{{list.description}}</a></h5>
                   <small><i class="far fa-clock"></i>Price : ${{list.price}}</small>
-                  <p class="phone-number mt-2 d-none"></p>
+                  <p class="phone-number mt-2 d-none" id="phone_{{list._id}}"></p>
                 </div>
                 <div class="card-footer">
                   <div class="media">

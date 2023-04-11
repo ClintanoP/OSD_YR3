@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Amplify } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import { environment} from 'src/environments/environment'
+import { environment} from 'src/environments/environment';
+import * as AWS from 'aws-sdk';
 import { userInfo } from 'os';
 import { threadId } from 'worker_threads';
 
 import { UserService } from './user.service';
+import { env } from 'process';
 
 export interface IUser {
   email: string;
@@ -18,6 +19,8 @@ export interface IUser {
   myusertype:string;
   phoneNum:string;
   "custom:phoneNumber":string;
+  "custom:usertype":string;
+  Attributes: {}
 }
 
 @Injectable({
@@ -28,6 +31,11 @@ export class CognitoService {
 
   private authenticationSubject: BehaviorSubject<any>;
 
+  userPoolId = environment.cognito.userPoolId;
+  awsRegion = 'eu-west-1';
+  cognitoIdentityPoolId = '';
+
+  
 
 
   constructor(private userService:UserService) {
@@ -43,6 +51,9 @@ export class CognitoService {
     return Auth.signUp({
       username: user.email,
       password: user.password,
+      attributes: {
+        'custom:usertype': 'user'
+      }
     });
   }
 
@@ -117,5 +128,86 @@ export class CognitoService {
       return Auth.updateUserAttributes(cognitoUser, user);
     });
   }
+
+  public getCognitoIdentityPoolId(): void{
+    Auth.currentAuthenticatedUser()
+    .then((currentUser) => {
+      Auth.currentCredentials()
+      .then((res) => {
+        this.cognitoIdentityPoolId = res.identityId;
+      })
+      .catch((err) => {
+        console.log('Current user credentials failed to fetch', err);
+      });
+    })
+  }
+
+  public async deleteUser(username: string): Promise<void> {
+    try {
+      const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider({
+        region: environment.cognito.userPoolRegion,
+        params: { UserPoolId: environment.cognito.userPoolId }
+      });
+      
+      const deleteUserParams = {
+        UserPoolId: environment.cognito.userPoolId,
+        Username: username
+      };
+      
+      await cognitoIdentityServiceProvider.adminDeleteUser(deleteUserParams).promise();
+      console.log(`User ${username} deleted successfully`);
+    } catch (error) {
+      console.error(`Failed to delete user ${username}: ${error}`);
+    }
+  }
+  
+
+  getAllUsers(): Observable<any> {
+    return new Observable(observer => {
+      AWS.config.region = 'eu-west-1'; // Region
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'eu-west-1:7722b641-9f63-45be-a092-8080c9c54fb1',
+      });
+      
+      Amplify.configure({
+        Auth:{
+          identityPoolId: environment.cognito.identityPoolId,
+          region: environment.cognito.userPoolRegion,
+          userPoolId: environment.cognito.userPoolId,
+          userPoolWebClientId: environment.cognito.userPoolWebClientId
+        }
+      });
+
+      const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider(
+        {
+          region: environment.cognito.userPoolRegion,
+          params:{UserPoolId: environment.cognito.userPoolId}
+        }
+      )
+
+      const getUsers = async () => {
+        try {
+          const response = await cognitoidentityserviceprovider.listUsers().promise();
+          observer.next(response.Users);
+          console.log(response.Users);
+          observer.complete();
+        } catch (error) {
+          observer.error(error);
+        }
+      };
+
+      Auth.currentAuthenticatedUser()
+      .then(() => {
+        getUsers();
+      })
+      .catch((error) => {
+        console.log(error);
+        // If the user is not authenticated, set the identity ID to the unauthenticated identity ID
+        getUsers();
+      });
+    });
+  }
+
+ 
 
 }

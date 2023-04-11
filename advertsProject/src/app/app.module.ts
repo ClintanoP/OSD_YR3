@@ -12,6 +12,8 @@ import { ProfileComponent } from './users/components/profile/profile.component';
 import { ErrorPopupComponent } from './users/components/error-popup/error-popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminDashboardComponent } from './users/components/admin-dashboard/admin-dashboard.component';
+import { AdminGuard } from './auth/admin.guard';
+import { GeneralUserGuard } from './auth/general-using.guard';
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import { AdminDashboardComponent } from './users/components/admin-dashboard/admi
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AdminGuard, GeneralUserGuard, AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

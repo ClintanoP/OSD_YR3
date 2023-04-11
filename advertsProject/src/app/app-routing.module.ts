@@ -6,12 +6,14 @@ import { SignInComponent } from './users/components/sign-in/sign-in.component';
 import { CreateListingComponent } from './listings/components/create-listing/create-listing.component';
 import { ListListingsComponent } from './listings/components/list-listings/list-listings.component';
 import { AdminDashboardComponent } from './users/components/admin-dashboard/admin-dashboard.component';
+import { GeneralUserGuard } from './auth/general-using.guard';
+import { AdminGuard } from './auth/admin.guard';
 
 
 const routes: Routes = [  
   {
-    path: 'profile',
-    component: ProfileComponent,
+    path: 'profile', 
+    component: ProfileComponent, canActivate: [GeneralUserGuard]
   },{
     path: 'signIn',
     component: SignInComponent,
@@ -20,7 +22,7 @@ const routes: Routes = [
     component: SignUpComponent,
   },{
     path: 'createListing',
-    component: CreateListingComponent
+    component: CreateListingComponent, canActivate: [GeneralUserGuard]
   },{
     path: 'home',
     component: ListListingsComponent
@@ -30,7 +32,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },{
     path: 'adminDashboard',
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent, canActivate: [AdminGuard]
+  },{
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 

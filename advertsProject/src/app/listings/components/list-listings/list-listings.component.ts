@@ -43,15 +43,17 @@ export class ListListingsComponent implements OnInit, OnDestroy {
 
 
   showPhoneNumber(list: Listing) {
-    const phoneNumberElement = document.querySelector(`.card-has-bg[style*="${list.image_url}"] .phone-number`);
+    const id = "phone_" + list._id;
+    const phoneNumberElement = document.getElementById(id);
     if (phoneNumberElement) {
       phoneNumberElement.innerHTML = `Phone: ${list.seller.phone}`;
       phoneNumberElement.classList.remove('d-none');
     }
   }
   
-  hidePhoneNumber() {
-    const phoneNumberElement = document.querySelector('.phone-number');
+  hidePhoneNumber(list: Listing) {
+    const id = "phone_" + list._id;
+    const phoneNumberElement = document.getElementById(id);
     if (phoneNumberElement) {
       phoneNumberElement.innerHTML = "";
     }

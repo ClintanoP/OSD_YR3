@@ -1,1 +1,33 @@
-<h1>ADMIN DASHBOARD</h1>
+<div>
+    <div>
+        <h2>Number of users : {{numberOfUsers}}</h2>
+    </div>
+    <table class="table table-light">
+        <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">User Status</th>
+                <th scope="col">User Type</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of (users$ | async)">
+                <td>
+                    <ng-container *ngFor="let attr of u.Attributes">
+                      <div *ngIf="attr.Name === 'email'">{{attr.Value}}</div>
+                    </ng-container>
+                  </td>
+                <td>{{u.UserStatus}}</td>
+                <td>
+                    <ng-container *ngFor="let attr of u.Attributes" id="usertype">
+                        <div *ngIf="attr.Name === 'custom:usertype'">{{attr.Value}}</div>
+                    </ng-container>           
+                </td>
+                <td>
+                    <button (click)="deleteUser(u.Username)" class="btn btn-danger" style="margin:5px">Delete User</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -36,7 +36,8 @@ onErrorPopupClose(){this.isVisible = false;}
     this.cognitoService.signIn(this.user)
 
     .then(() => {
-      this.cognitoService.getMyUser()
+      this.cognitoService.getMyUser();
+      this.cognitoService.getCognitoIdentityPoolId();
       this.router.navigate(['/profile']);
     }).catch(error => {
       this.loading = false;

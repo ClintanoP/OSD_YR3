@@ -1,32 +1,33 @@
-<div class="gradient-bg">
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+
+<body class="gradient-bg">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="nav-link" routerLink="/home" routerLinkActive="active">Listings Website</a>
-       
-  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
   
       <div id="navbarContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/signUp" routerLinkActive="active" *ngIf="!isAuthenticated()">Sign up</a>
+            <a class="hoverable" routerLink="/home" routerLinkActive="active">Listings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/signIn" routerLinkActive="active" *ngIf="!isAuthenticated()">Sign in</a>
+            <a class="hoverable" routerLink="/signUp" routerLinkActive="active" *ngIf="!isAuthenticated()">Sign up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/profile" routerLinkActive="active" *ngIf="isAuthenticated()">Profile</a>
+            <a class="hoverable" routerLink="/signIn" routerLinkActive="active" *ngIf="!isAuthenticated()">Sign in</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="" (click)="signOut()" *ngIf="isAuthenticated()">Sign out</a>
+            <a class="hoverable" routerLink="/profile" routerLinkActive="active" *ngIf="isAuthenticated()">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/createListing" routerLinkActive="active" *ngIf="isAuthenticated()">Create Listing</a>
+            <a class="hoverable" routerLink="" (click)="signOut()" *ngIf="isAuthenticated()">Sign out</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/adminDashboard" routerLinkActive="active" *ngIf="isAdmin()">Admin Dashboard</a>
+            <a class="hoverable" routerLink="/createListing" routerLinkActive="active" *ngIf="isAuthenticated()">Create Listing</a>
+          </li>
+          <li class="nav-item">
+            <a class="hoverable" routerLink="/adminDashboard" routerLinkActive="active" *ngIf="isAdmin()">Admin Dashboard</a>
           </li>
         </ul>
       </div>
@@ -36,8 +37,8 @@
 
   
 
-<div style="margin-top: 20px;">
-    <router-outlet></router-outlet>
-</div>
-
-</div>
+  <div>
+      <router-outlet></router-outlet>
+  </div>
+  
+</body>

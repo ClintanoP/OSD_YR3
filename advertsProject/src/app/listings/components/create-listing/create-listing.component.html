@@ -1,43 +1,56 @@
-<form (ngSubmit) = "onSubmit(createForm)" #createForm="ngForm">
+
+<form (ngSubmit)="onSubmit(createForm)" #createForm="ngForm">
   <div class="form-group">
     <label for="title">Title</label>
     <input 
-    type="text"
-    id="title"
-    name="title"
-    class="form-control"
-    ngModel
-    required>
+      type="text"
+      id="title"
+      name="title"
+      class="form-control"
+      ngModel
+      required
+    >
   </div>
   <div class="form-group">
-    <label for="description">description</label>
+    <label for="description">Description</label>
     <input 
-    type="text"
-    id="description"
-    name="description"
-    class="form-control"
-    ngModel
-    required>
+      type="text"
+      id="description"
+      name="description"
+      class="form-control"
+      ngModel
+      required
+    >
   </div>
   <div class="form-group">
     <label for="price">Price</label>
     <input 
-    type="number"
-    id="price"
-    name="price"
-    class="form-control"
-    ngModel
-    required>
+      type="number"
+      id="price"
+      name="price"
+      class="form-control"
+      ngModel
+      required
+    >
   </div>
   <div class="form-group">
-    <label for="image_url">Image URL</label>
+    <label for="image">Image</label>
     <input 
-    type="text"
-    id="image_url"
-    name="image_url"
-    class="form-control"
-    ngModel
-    required>
+      type="file" 
+      id="image" 
+      name="image" 
+      class="form-control-file" 
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      required
+    >
+    <small class="form-text text-muted">Upload a product image.</small>
   </div>
-  <button [disabled]="createForm.invalid" class="btn btn-primary mt-3" type="submit">Create</button>
+  <button 
+    [disabled]="createForm.invalid" 
+    class="btn btn-primary mt-3" 
+    type="submit"
+  >
+    Create
+  </button>
 </form>
